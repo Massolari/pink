@@ -1,0 +1,15 @@
+{
+    "name": "pink",
+    "version": "1.0.0",
+    "main": "index.js",
+    "author": "Douglas M. <douglasmassolari@hotmail.com>",
+    "license": "MIT",
+    "dependencies": {
+        "ink": "^5.0.0",
+        "ink-spinner": "^5.0.0",
+        "react": "^18.3.1"
+    },
+    "devDependencies": {
+        "ink-testing-library": "^4.0.0"
+    }
+}

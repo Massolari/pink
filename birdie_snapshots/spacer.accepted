@@ -1,0 +1,18 @@
+---
+version: 1.1.6
+title: spacer
+file: ./test/pink_test.gleam
+test_name: spacer_test
+---
+Left                                                                                           Right
+
+Top
+
+
+
+
+
+
+
+
+Bottom

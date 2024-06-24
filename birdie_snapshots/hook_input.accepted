@@ -1,0 +1,7 @@
+---
+version: 1.1.6
+title: hook input
+file: ./test/pink_test.gleam
+test_name: use_input_test
+---
+Type something

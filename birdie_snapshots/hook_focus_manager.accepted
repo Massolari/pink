@@ -1,0 +1,14 @@
+---
+version: 1.1.6
+title: hook focus_manager
+file: ./test/pink_test.gleam
+test_name: use_manager_test
+---
+I am not focused
+I am not focused
+---
+I am focused
+I am not focused
+---
+I am not focused
+I am focused

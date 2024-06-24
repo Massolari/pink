@@ -1,0 +1,18 @@
+---
+version: 1.1.6
+title: static
+file: ./test/pink_test.gleam
+test_name: static_test
+---
+[32m  Test 1[39m
+[32m  Test 2[39m
+[32m  Test 3[39m
+[32m  Test 4[39m
+[32m  Test 5[39m
+[32m  Test 6[39m
+[32m  Test 7[39m
+[32m  Test 8[39m
+[32m  Test 9[39m
+[32m  Test 10[39m
+
+Completed tests: 10

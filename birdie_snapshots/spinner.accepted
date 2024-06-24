@@ -1,0 +1,7 @@
+---
+version: 1.1.6
+title: spinner
+file: ./test/pink_test.gleam
+test_name: spinner_test
+---
+⠋

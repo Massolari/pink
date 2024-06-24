@@ -1,0 +1,23 @@
+---
+version: 1.1.6
+title: box
+file: ./test/pink_test.gleam
+test_name: box_test
+---
+
+
+  This is a box with margin 2
+
+
+widt
+h 4
+height 4
+
+
+
+┌──────┐  ╔══════╗  ╭─────╮  ┏━━━━┓
+│single│  ║double║  │round│  ┃bold┃
+└──────┘  ╚══════╝  ╰─────╯  ┗━━━━┛
+╓─────────────╖  ╒═════════════╕  +-------+
+║single double║  │double single│  |classic|
+╙─────────────╜  ╘═════════════╛  +-------+

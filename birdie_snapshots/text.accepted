@@ -1,0 +1,14 @@
+---
+version: 1.1.6
+title: text
+file: ./test/pink_test.gleam
+test_name: text_test
+---
+[32mI am green[39m
+[47m[30mI am black on white[39m[49m
+[38;2;255;255;255mI am white[39m
+[1mI am bold[22m
+[3mI am italic[23m
+[4mI am underline[24m
+[9mI am strikethrough[29m
+[7mI am inversed[27m
