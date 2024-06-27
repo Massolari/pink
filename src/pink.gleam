@@ -144,7 +144,8 @@ pub fn fragment(
 }
 
 /// `box` is an essential Ink component to build your layout.
-/// It's like a `div` with `style="display: flex"` in the browser.
+///
+/// It's like a `<div style="display: flex">` in the browser.
 ///
 /// ## Examples
 /// ```gleam
