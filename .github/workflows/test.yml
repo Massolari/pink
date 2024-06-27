@@ -12,16 +12,16 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: pnpm/action-setup@v4
         with:
-          node-version: 18
+          version: 8
       - uses: erlef/setup-beam@v1
         with:
           otp-version: "26.0.2"
           gleam-version: "1.2.1"
           rebar3-version: "3"
           # elixir-version: "1.15.4"
-      - run: npm ci
+      - run: pnpm install
       - run: gleam deps download
       - run: gleam test
       - run: gleam format --check src test
