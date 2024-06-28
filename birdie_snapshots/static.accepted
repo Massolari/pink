@@ -4,15 +4,15 @@ title: static
 file: ./test/pink_test.gleam
 test_name: static_test
 ---
-[32m  Test 1[39m
-[32m  Test 2[39m
-[32m  Test 3[39m
-[32m  Test 4[39m
-[32m  Test 5[39m
-[32m  Test 6[39m
-[32m  Test 7[39m
-[32m  Test 8[39m
-[32m  Test 9[39m
-[32m  Test 10[39m
+  Test 1
+  Test 2
+  Test 3
+  Test 4
+  Test 5
+  Test 6
+  Test 7
+  Test 8
+  Test 9
+  Test 10
 
 Completed tests: 10

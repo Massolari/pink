@@ -4,6 +4,6 @@ title: newline
 file: ./test/pink_test.gleam
 test_name: newline_test
 ---
-[32mHello[39m
+Hello
 
-[31mWorld[39m
+World
