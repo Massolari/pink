@@ -33,7 +33,7 @@ fn react_fragment(attributes: Json, children: List(ReactNode)) -> ReactNode
 ///     ],
 ///     [
 ///       text([], "Hello, "),
-///       text([style.underline()], "world!"),
+///       text([attribute.underline(True)], "world!"),
 ///     ]
 ///   )
 /// )
@@ -102,8 +102,8 @@ pub fn text(
 /// ## Examples
 /// ```gleam
 /// text_nested(attr: [], content: [
-///  text([style.bold()], "Hello, "),
-///  text([style.underline()], "world!"),
+///  text([attribute.bold(True)], "Hello, "),
+///  text([attribute.underline(True)], "world!"),
 /// ])
 /// ```
 pub fn text_nested(
@@ -133,7 +133,7 @@ fn node(
 /// ```gleam
 /// fragment(attr: [], elements: [
 ///   box([attribute.padding(1)], [pink.text([], "Hello, ")]),
-///   text([style.underline()], "world!"),
+///   text([attribute.underline(True)], "world!"),
 /// ])
 /// ```
 pub fn fragment(
@@ -156,7 +156,7 @@ pub fn fragment(
 ///   ],
 ///   components: [
 ///     text([], "Hello, "),
-///     text([style.underline()], "world!"),
+///     text([attribute.underline(True)], "world!"),
 ///   ]
 /// )
 /// ```
