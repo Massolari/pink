@@ -13,3 +13,6 @@ export const fragment = (props, children) => {
   return createElement(Fragment, props, ...parsedChildren)
 }
 
+export const getState = ([state, _]) => state
+
+export const setState = ([_, setState], value) => setState(value)

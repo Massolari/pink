@@ -5,9 +5,14 @@ import gleam/list
 import gleam/string
 import gleeunit
 import pink.{type ReactNode}
+import pink/app
 import pink/attribute
 import pink/focus
+import pink/focus_manager
 import pink/hook
+import pink/state
+import pink/stdin
+import pink/stdout
 
 pub type Timer
 
@@ -154,10 +159,10 @@ pub fn static_test() {
   promise.new(fn(resolve) {
     let data =
       pink.component(fn() {
-        let tests = hook.state([])
+        let tests = state.init([])
 
         let run = fn() {
-          tests.set_with(fn(previous_tests) {
+          state.set_with(tests, fn(previous_tests) {
             list.append(previous_tests, [
               "Test " <> int.to_string(list.length(previous_tests) + 1),
             ])
@@ -173,13 +178,17 @@ pub fn static_test() {
         )
 
         pink.fragment([], [
-          pink.static(for: tests.value, using: fn(test_, _index) {
+          pink.static(for: state.get(tests), using: fn(test_, _index) {
             pink.box([attribute.key(test_)], [pink.text([], "  " <> test_)])
           }),
           pink.box([attribute.margin_top(1)], [
             pink.text(
               [],
-              "Completed tests: " <> int.to_string(list.length(tests.value)),
+              "Completed tests: "
+                <> tests
+              |> state.get
+              |> list.length
+              |> int.to_string,
             ),
           ]),
         ])
@@ -221,13 +230,15 @@ pub fn use_state_test() {
   promise.new(fn(resolve) {
     let data =
       pink.component(fn() {
-        let message = hook.state("Hello, world")
+        let message = state.init("Hello, world")
 
         hook.effect(
           fn() {
-            message.set("Changed")
+            state.set(message, "Changed")
             set_timeout(
-              fn() { message.set_with(fn(previous) { previous <> " 2" }) },
+              fn() {
+                state.set_with(message, fn(previous) { previous <> " 2" })
+              },
               0,
             )
             Nil
@@ -235,7 +246,7 @@ pub fn use_state_test() {
           [],
         )
 
-        pink.text([], message.value)
+        pink.text([], state.get(message))
       })
       |> render
     set_timeout(fn() { resolve(data) }, 10)
@@ -266,9 +277,9 @@ pub fn use_input_test() {
 pub fn use_app_test() {
   let data =
     pink.component(fn() {
-      let app = hook.app()
+      let app = app.get()
 
-      hook.effect(fn() { app.exit() }, [])
+      hook.effect(fn() { app.exit(app) }, [])
 
       pink.text([], "Hello, world")
     })
@@ -281,12 +292,12 @@ pub fn use_app_test() {
 pub fn use_stdin_test() {
   let data =
     pink.component(fn() {
-      let stdin = hook.stdin()
+      let stdin = stdin.get()
 
       hook.effect(
         fn() {
-          case stdin.is_raw_mode_supported {
-            True -> stdin.set_raw_mode(True)
+          case stdin.is_raw_mode_supported(stdin) {
+            True -> stdin.set_raw_mode(stdin, True)
             False -> Nil
           }
         },
@@ -295,7 +306,8 @@ pub fn use_stdin_test() {
 
       pink.text(
         [],
-        "is_raw_mode_supported: " <> string.inspect(stdin.is_raw_mode_supported),
+        "is_raw_mode_supported: "
+          <> string.inspect(stdin.is_raw_mode_supported(stdin)),
       )
     })
     |> render
@@ -308,9 +320,9 @@ pub fn use_stdout_test() {
   promise.new(fn(resolve) {
     let data =
       pink.component(fn() {
-        let stdout = hook.stdout()
+        let stdout = stdout.get()
 
-        hook.effect(fn() { stdout.write("Hello from stdout") }, [])
+        hook.effect(fn() { stdout.write(stdout, "Hello from stdout") }, [])
 
         pink.text([], "Hello from text")
       })
@@ -359,13 +371,13 @@ pub fn use_manager_test() {
   promise.new(fn(resolve) {
     let data =
       pink.component(fn() {
-        let manager = hook.focus_manager()
+        let manager = focus_manager.get()
         hook.effect(
           fn() {
-            manager.disable_focus()
-            manager.enable_focus()
-            manager.focus_next()
-            set_timeout(fn() { manager.focus_previous() }, 0)
+            focus_manager.disable_focus(manager)
+            focus_manager.enable_focus(manager)
+            focus_manager.focus_next(manager)
+            set_timeout(fn() { focus_manager.focus_previous(manager) }, 0)
             Nil
           },
           [],
