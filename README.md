@@ -25,18 +25,18 @@ Here's a basic example of how to use Pink:
 ```gleam
 import pink
 import pink/attribute
-import pink/hook
+import pink/state
 
 pub fn main() {
     // Create a new React component (we need this to use hooks)
     use <- pink.component()
 
     // Initialize a state (this is React's useState hook)
-    let message = hook.state("World")
+    let message = state.init("World")
 
     // Create a box with a border and a text component inside
     pink.box([attribute.border_style(attribute.BorderSingle)], [
-        pink.text([], "Hello, " <> message.value)
+        pink.text([], "Hello, " <> state.get(message))
     ])
 }
 ```
