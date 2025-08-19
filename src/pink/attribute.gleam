@@ -61,6 +61,7 @@ pub type JustifyContent {
   ContentEnd
   ContentSpaceBetween
   ContentSpaceAround
+  ContentSpaceEvenly
 }
 
 /// `Display` is the type the function `display` accepts
@@ -615,6 +616,13 @@ pub fn align_self(align: AlignSelf) -> Attribute {
 /// ])
 /// // -> "  X   Y  "
 /// ```
+/// ```gleam
+/// box([justify_content(ContentSpaceEvenly)], [
+///   text([], "X"),
+///   text([], "Y")
+/// ])
+/// // -> "   X   Y   "
+/// ```
 pub fn justify_content(justify: JustifyContent) -> Attribute {
   Attribute(
     "justifyContent",
@@ -624,6 +632,7 @@ pub fn justify_content(justify: JustifyContent) -> Attribute {
       ContentEnd -> "flex-end"
       ContentSpaceBetween -> "space-between"
       ContentSpaceAround -> "space-around"
+      ContentSpaceEvenly -> "space-evenly"
     }),
   )
 }
