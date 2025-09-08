@@ -27,16 +27,21 @@ import pink
 import pink/attribute
 import pink/state
 
+fn my_component() {
+  // Create a new React component (we need this to use hooks)
+  use <- pink.component()
+
+  // Initialize a state (this is React's useState hook)
+  let message = state.init("World")
+
+  // Create a box with a border and a text component inside
+  pink.box([attribute.border_style(attribute.BorderSingle)], [
+    pink.text([], "Hello, " <> state.get(message)),
+  ])
+}
+
 pub fn main() {
-    // Create a new React component (we need this to use hooks)
-    use <- pink.component()
-
-    // Initialize a state (this is React's useState hook)
-    let message = state.init("World")
-
-    // Create a box with a border and a text component inside
-    pink.box([attribute.border_style(attribute.BorderSingle)], [
-        pink.text([], "Hello, " <> state.get(message))
-    ])
+  // Render your component
+  pink.render(my_component())
 }
 ```
