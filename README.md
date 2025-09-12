@@ -11,7 +11,7 @@ A minimal React-like library for building terminal UIs.
 This package depends on Ink and React. The specific versions listed below are recommended because they have been tested with this package. Using other versions may lead to unexpected results.
 
 ```sh
-npm install ink@5.0 ink-spinner@5.0 react@18.3
+npm install ink@6 ink-spinner@5 react@19
 ```
 
 To add the Pink package to your Gleam project, use the following command:

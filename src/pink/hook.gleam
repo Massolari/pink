@@ -54,9 +54,9 @@ pub fn input(callback: fn(String, List(Key)) -> Nil, is_active: Bool) {
       let key =
         json_key
         |> json.to_string
-        |> json.decode(key.list_decoder())
+        |> json.parse(key.list_decoder())
         |> result.map_error(fn(decode_error) {
-          io.debug("Failed to decode key" <> string.inspect(decode_error))
+          io.println("Failed to decode key" <> string.inspect(decode_error))
           decode_error
         })
         |> result.unwrap([])

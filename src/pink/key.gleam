@@ -1,8 +1,7 @@
 /// A module for decoding keyboard keys from JSON.
-import gleam/dynamic
+import gleam/dynamic/decode
 import gleam/function
 import gleam/list
-import gleam/result
 
 /// A key on the keyboard.
 pub type Key {
@@ -23,72 +22,50 @@ pub type Key {
 }
 
 fn decoder(key) {
-  fn(json) {
-    json
-    |> dynamic.bool
-    |> result.map(fn(value) {
-      case value {
-        True -> Ok(key)
-        False -> Error(Nil)
-      }
-    })
+  use value <- decode.then(decode.bool)
+
+  case value {
+    True -> Ok(key)
+    False -> Error(Nil)
   }
+  |> decode.success
 }
 
 @internal
 pub fn list_decoder() {
-  fn(json_string) {
-    dynamic.decode9(
-      fn(
-        up_arrow,
-        down_arrow,
-        left_arrow,
-        right_arrow,
-        page_down,
-        page_up,
-        return,
-        escape,
-        ctrl,
-      ) {
-        dynamic.decode5(
-          fn(shift, tab, backspace, delete, meta) {
-            list.filter_map(
-              [
-                up_arrow,
-                down_arrow,
-                left_arrow,
-                right_arrow,
-                page_down,
-                page_up,
-                return,
-                escape,
-                ctrl,
-                shift,
-                tab,
-                backspace,
-                delete,
-                meta,
-              ],
-              function.identity,
-            )
-          },
-          dynamic.field("shift", decoder(Shift)),
-          dynamic.field("tab", decoder(Tab)),
-          dynamic.field("backspace", decoder(Backspace)),
-          dynamic.field("delete", decoder(Delete)),
-          dynamic.field("meta", decoder(Meta)),
-        )(json_string)
-      },
-      dynamic.field("upArrow", decoder(UpArrow)),
-      dynamic.field("downArrow", decoder(DownArrow)),
-      dynamic.field("leftArrow", decoder(LeftArrow)),
-      dynamic.field("rightArrow", decoder(RightArrow)),
-      dynamic.field("pageDown", decoder(PageDown)),
-      dynamic.field("pageUp", decoder(PageUp)),
-      dynamic.field("return", decoder(Return)),
-      dynamic.field("escape", decoder(Escape)),
-      dynamic.field("ctrl", decoder(Ctrl)),
-    )(json_string)
-    |> result.flatten
-  }
+  use up_arrow <- decode.field("upArrow", decoder(UpArrow))
+  use down_arrow <- decode.field("downArrow", decoder(DownArrow))
+  use left_arrow <- decode.field("leftArrow", decoder(LeftArrow))
+  use right_arrow <- decode.field("rightArrow", decoder(RightArrow))
+  use page_down <- decode.field("pageDown", decoder(PageDown))
+  use page_up <- decode.field("pageUp", decoder(PageUp))
+  use return <- decode.field("return", decoder(Return))
+  use escape <- decode.field("escape", decoder(Escape))
+  use ctrl <- decode.field("ctrl", decoder(Ctrl))
+  use shift <- decode.field("shift", decoder(Shift))
+  use tab <- decode.field("tab", decoder(Tab))
+  use backspace <- decode.field("backspace", decoder(Backspace))
+  use delete <- decode.field("delete", decoder(Delete))
+  use meta <- decode.field("meta", decoder(Meta))
+
+  list.filter_map(
+    [
+      up_arrow,
+      down_arrow,
+      left_arrow,
+      right_arrow,
+      page_down,
+      page_up,
+      return,
+      escape,
+      ctrl,
+      shift,
+      tab,
+      backspace,
+      delete,
+      meta,
+    ],
+    function.identity,
+  )
+  |> decode.success
 }

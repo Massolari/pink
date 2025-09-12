@@ -1,5 +1,6 @@
 import birdie
 import gleam/int
+import gleam/javascript/array
 import gleam/javascript/promise
 import gleam/list
 import gleam/string
@@ -17,7 +18,7 @@ import pink/stdout
 pub type Timer
 
 pub type Render {
-  Render(last_frame: fn() -> String, frames: List(String))
+  Render(last_frame: fn() -> String, frames: array.Array(String))
 }
 
 @external(javascript, "./ink_test_ffi.mjs", "render")
@@ -249,12 +250,14 @@ pub fn use_state_test() {
         pink.text([], state.get(message))
       })
       |> render
+
     set_timeout(fn() { resolve(data) }, 10)
 
     Nil
   })
   |> promise.await(fn(data) {
     data.frames
+    |> array.to_list
     |> string.join("\n---\n")
     |> birdie.snap("hook state")
     |> promise.resolve
@@ -340,23 +343,31 @@ pub fn use_stdout_test() {
 }
 
 pub fn use_focus_test() {
-  let data =
-    pink.component(fn() {
-      let focus =
-        hook.focus(
-          focus.options()
-          |> focus.set_auto_focus(True),
-        )
+  promise.new(fn(resolve) {
+    let data =
+      pink.component(fn() {
+        let focus =
+          hook.focus(
+            focus.options()
+            |> focus.set_auto_focus(True),
+          )
 
-      pink.text([], case focus.is_focused {
-        True -> "I am focused"
-        False -> "I am not focused"
+        pink.text([], case focus.is_focused {
+          True -> "I am focused"
+          False -> "I am not focused"
+        })
       })
-    })
-    |> render
+      |> render
 
-  data.last_frame()
-  |> birdie.snap("hook focus")
+    set_timeout(fn() { resolve(data) }, 0)
+
+    Nil
+  })
+  |> promise.await(fn(data) {
+    data.last_frame()
+    |> birdie.snap("hook focus")
+    |> promise.resolve
+  })
 }
 
 pub fn use_manager_test() {
@@ -368,6 +379,7 @@ pub fn use_manager_test() {
         False -> "I am not focused"
       })
     })
+
   promise.new(fn(resolve) {
     let data =
       pink.component(fn() {
@@ -395,6 +407,7 @@ pub fn use_manager_test() {
   })
   |> promise.await(fn(data) {
     data.frames
+    |> array.to_list
     |> string.join("\n---\n")
     |> birdie.snap("hook focus_manager")
     |> promise.resolve
