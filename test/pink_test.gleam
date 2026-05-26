@@ -325,7 +325,7 @@ pub fn use_stdout_test() {
       pink.component(fn() {
         let stdout = stdout.get()
 
-        hook.effect(fn() { stdout.write(stdout, "Hello from stdout") }, [])
+        hook.effect(fn() { stdout.write(stdout, "Hello from stdout\n") }, [])
 
         pink.text([], "Hello from text")
       })
