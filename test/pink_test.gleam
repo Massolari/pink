@@ -172,7 +172,7 @@ pub fn static_test() {
 
         hook.effect(
           fn() {
-            list.range(1, 10)
+            int.range(from: 10, to: 0, with: [], run: list.prepend)
             |> list.each(fn(n) { set_timeout(run, n * 100) })
           },
           [],
