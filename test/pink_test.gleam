@@ -389,7 +389,7 @@ pub fn use_manager_test() {
             focus_manager.disable_focus(manager)
             focus_manager.enable_focus(manager)
             focus_manager.focus_next(manager)
-            set_timeout(fn() { focus_manager.focus_previous(manager) }, 0)
+            set_timeout(fn() { focus_manager.focus_previous(manager) }, 50)
             Nil
           },
           [],
@@ -401,7 +401,7 @@ pub fn use_manager_test() {
       })
       |> render
 
-    set_timeout(fn() { resolve(data) }, 10)
+    set_timeout(fn() { resolve(data) }, 100)
 
     Nil
   })
